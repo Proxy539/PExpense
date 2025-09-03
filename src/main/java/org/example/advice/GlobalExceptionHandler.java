@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
 
         body.put("timestamp", LocalDateTime.now());
         body.put("status", errorStatus.value());
-        body.put("error", errorStatus);
+        body.put("error", errorStatus.getReasonPhrase());
         body.put("message", errorMessage);
 
         return body;
