@@ -44,7 +44,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void create(CategoryDTO category) {
+    public CategoryDTO create(CategoryDTO category) {
 
         log.info("Creating new category {}", category);
 
@@ -52,12 +52,14 @@ public class CategoryServiceImpl implements CategoryService {
                         .name(category.getName())
                         .build();
 
-        categoryRepository.save(newCategory);
+        var savedCategory = categoryRepository.save(newCategory);
+
+        return mapToDTO(savedCategory);
 
     }
 
     @Override
-    public void update(Long id, CategoryDTO category) {
+    public CategoryDTO update(Long id, CategoryDTO category) {
 
         log.info("Updating category {}", category);
 
@@ -65,7 +67,9 @@ public class CategoryServiceImpl implements CategoryService {
 
         savedCategory.setName(category.getName());
 
-        categoryRepository.save(savedCategory);
+        var updatedCategory = categoryRepository.save(savedCategory);
+
+        return mapToDTO(updatedCategory);
     }
 
     @Override

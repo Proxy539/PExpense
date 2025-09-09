@@ -8,8 +8,8 @@ public interface CategoryService {
 
     CategoryDTO findById(Long id);
     List<CategoryDTO> findAll();
-    void create(CategoryDTO expense);
-    void update(Long id, CategoryDTO expense);
+    CategoryDTO create(CategoryDTO expense);
+    CategoryDTO update(Long id, CategoryDTO expense);
     void delete(Long id);
 
 }
