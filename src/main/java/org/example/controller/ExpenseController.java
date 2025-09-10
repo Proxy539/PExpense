@@ -29,13 +29,13 @@ public class ExpenseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody ExpenseDTO expense) {
-        expenseService.create(expense);
+    public ExpenseDTO create(@RequestBody ExpenseDTO expense) {
+        return expenseService.create(expense);
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable Long id, @RequestBody ExpenseDTO expense) {
-        expenseService.update(id, expense);
+    public ExpenseDTO update(@PathVariable Long id, @RequestBody ExpenseDTO expense) {
+        return expenseService.update(id, expense);
     }
 
     @DeleteMapping("/{id}")
