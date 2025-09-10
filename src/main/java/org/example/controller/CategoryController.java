@@ -2,7 +2,6 @@ package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.domain.Category;
 import org.example.dto.CategoryDTO;
 import org.example.service.CategoryService;
 import org.springframework.http.HttpStatus;
@@ -30,13 +29,13 @@ public class CategoryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody CategoryDTO expense) {
-        categoryService.create(expense);
+    public CategoryDTO create(@RequestBody CategoryDTO expense) {
+        return categoryService.create(expense);
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable Long id, @RequestBody CategoryDTO expense) {
-        categoryService.update(id, expense);
+    public CategoryDTO update(@PathVariable Long id, @RequestBody CategoryDTO expense) {
+        return categoryService.update(id, expense);
     }
 
     @DeleteMapping("/{id}")
