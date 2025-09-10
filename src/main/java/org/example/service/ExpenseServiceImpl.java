@@ -2,18 +2,15 @@ package org.example.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.domain.Category;
 import org.example.domain.Expense;
 import org.example.dto.CategoryDTO;
 import org.example.dto.ExpenseDTO;
-import org.example.exception.BadRequestException;
 import org.example.exception.EntityNotFoundException;
 import org.example.repository.CategoryRepository;
 import org.example.repository.ExpenseRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.example.utils.Constants.CATEGORY_NOT_FOUND_BY_NAME_MESSAGE;
 import static org.example.utils.Constants.EXPENSE_NOT_FOUND_BY_ID_MESSAGE;
@@ -49,12 +46,12 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public void create(ExpenseDTO expense) {
+    public ExpenseDTO create(ExpenseDTO expense) {
         log.info("Creating new expense {}", expense);
 
         var categoryName = expense.getCategory().getName();
 
-        var category = categoryRepository.findByName(categoryName).orElseThrow(() -> new BadRequestException(String.format(CATEGORY_NOT_FOUND_BY_NAME_MESSAGE, categoryName)));
+        var category = categoryRepository.findByName(categoryName).orElseThrow(() -> new EntityNotFoundException(String.format(CATEGORY_NOT_FOUND_BY_NAME_MESSAGE, categoryName)));
 
         var newExpense = Expense.builder()
                             .amount(expense.getAmount())
@@ -63,11 +60,13 @@ public class ExpenseServiceImpl implements ExpenseService {
                             .category(category)
                             .build();
 
-        expenseRepository.save(newExpense);
+        var savedExpense = expenseRepository.save(newExpense);
+
+        return mapToDTO(savedExpense);
     }
 
     @Override
-    public void update(Long id, ExpenseDTO expense) {
+    public ExpenseDTO update(Long id, ExpenseDTO expense) {
         log.info("Updating expense {}", expense);
 
         Expense savedExpense = expenseRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format(EXPENSE_NOT_FOUND_BY_ID_MESSAGE, id)));
@@ -76,7 +75,9 @@ public class ExpenseServiceImpl implements ExpenseService {
         savedExpense.setDate(expense.getDate());
         savedExpense.setDescription(expense.getDescription());
 
-        expenseRepository.save(savedExpense);
+        var updatedExpense = expenseRepository.save(savedExpense);
+
+        return mapToDTO(updatedExpense);
     }
 
     @Override

@@ -1,11 +1,7 @@
 package org.example.service;
 
-import org.example.domain.Category;
-import org.example.dto.CategoryDTO;
 import org.example.exception.EntityNotFoundException;
 import org.example.repository.CategoryRepository;
-import org.expample.utils.CategoryUtils;
-import org.expample.utils.Constants;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,7 +14,6 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.expample.utils.CategoryUtils.*;
-import static org.expample.utils.Constants.CATEGORY_NOT_FOUND_BY_ID_MESSAGE;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -34,8 +29,8 @@ class CategoryServiceImplTest {
     @Test
     public void givenCategoryExistsWhenFindByIdThenReturnsCategory() {
 
-        var expectedCategory = CategoryUtils.buildCategory();
-        var expectedCategoryDTO = CategoryUtils.buildCategoryDTO();
+        var expectedCategory = buildCategory();
+        var expectedCategoryDTO = buildCategoryDTO();
 
         when(categoryRepository.findById(TEST_CATEGORY_ID)).thenReturn(Optional.of(expectedCategory));
 

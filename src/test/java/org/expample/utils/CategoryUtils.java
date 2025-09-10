@@ -5,6 +5,7 @@ import org.example.dto.CategoryDTO;
 
 public class CategoryUtils {
 
+    public static final String CATEGORY_NOT_FOUND_BY_ID_MESSAGE = "Category not found by id %d";
     public static final Long TEST_CATEGORY_ID = 1L;
     public static final String TEST_CATEGORY_NAME = "test category";
     public static final String NEW_TEST_CATEGORY_NAME = "new test category";
